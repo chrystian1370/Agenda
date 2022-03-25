@@ -14,16 +14,16 @@
 <!-- E-mail -->
     <input type="text" name="email" placeholder="E-mail">
 <!-- Telefone -->
-    <input type="tel"name="tel" placeholder="Telefone">
+    <input type="tel"name="phone" placeholder="Telefone">
     
     <button type="submit">
       Adicionar
     </button>
   </form>  
 
-  <!-- Exibição da lista de TODOs  -->
+  <!-- Exibição da lista de Contact  -->
   <ul>
-    {% for item in todos %} 
+    {% for item in contact %} 
       <li>{{ item.name }}</li>
     {% endfor %}
   </ul>
