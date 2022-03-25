@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="stylesheet/style.css" rel="stylesheet">
   <title>Agenda de Contatos</title>
 </head>
 <body>
@@ -19,10 +20,17 @@
   </form>  
 
   <!-- Exibição da lista de Contact  -->
-  <ul>
-    {% for item in contacts %} 
-      <li>{{ item.name }}</li>
-    {% endfor %}
-  </ul>
+  <table>
+      <ul>
+        {% for item in contacts %}
+        <td>
+          <li><input type="text" name="{{ item.name }}" value="{{ item.name }}"</input>
+          <input type="text" name="{{ item.email }}" value="{{ item.email }}"</input>
+          <input type="text" name="{{ item.phone }}" value="{{ item.phone }}"</input>
+          <button type="edit">Editar</button></li>
+        </td>
+            {% endfor %}
+      </ul>
+  </table>
 </body>
 </html>
