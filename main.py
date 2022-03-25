@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect
 app = Flask('app')
 
-contact = [
+contacts = [
   {'name' : 'Chrystian Alvarenga' },  
 ]
 
@@ -9,13 +9,13 @@ contact = [
 def index():
   return render_template(
     'index.html',
-    contact=contact
+    contacts=contacts
   )
 
 @app.route('/create', methods=['POST'])
 def create():
   title = request.form.get('name')
-  contact.append({'name':title})
+  contacts.append({'name':title})
   return redirect ('/')
   
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,13 +9,9 @@
 <body>
 <!--  Formulário de criação de Agenda -->
   <form action="/create" method="POST">
-<!-- Nome -->
     <input type="text" name="name" placeholder="Nome">
-<!-- E-mail -->
     <input type="text" name="email" placeholder="E-mail">
-<!-- Telefone -->
-    <input type="tel"name="phone" placeholder="Telefone">
-    
+    <input type="tel"name="phone" placeholder="Telefone">    
     <button type="submit">
       Adicionar
     </button>
@@ -23,7 +19,7 @@
 
   <!-- Exibição da lista de Contact  -->
   <ul>
-    {% for item in contact %} 
+    {% for item in contacts %} 
       <li>{{ item.name }}</li>
     {% endfor %}
   </ul>
