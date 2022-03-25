@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda de Contatos</title>
+</head>
+<body>
+<!--  Formulário de criação de Agenda -->
+  <form action="/create" method="POST">
+<!-- Nome -->
+    <input type="text" name="name" placeholder="Nome">
+<!-- E-mail -->
+    <input type="text" name="email" placeholder="E-mail">
+<!-- Telefone -->
+    <input type="tel"name="tel" placeholder="Telefone">
+    
+    <button type="submit">
+      Adicionar
+    </button>
+  </form>  
+
+  <!-- Exibição da lista de TODOs  -->
+  <ul>
+    {% for item in todos %} 
+      <li>{{ item.name }}</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
