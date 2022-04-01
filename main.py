@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect
 app = Flask('app')
 
-todos = [
+contacts = [
   { 
     'name': 'Chrystian Alvarenga',
     'email':'chrystianalvarenga@hotmail.com',
@@ -11,14 +11,14 @@ todos = [
 
 @app.route('/')
 def index():
-  return render_template('index.html',todos=todos)
+  return render_template('index.html',contacts=contacts)
 
 @app.route('/create', methods=['POST'])
 def create():
   name = request.form.get('name')
   email = request.form.get('email')
   phone = request.form.get('phone')
-  todos.append({
+  contacts.append({
     'name': name,   
     'email': email,
     'phone': phone
@@ -27,18 +27,18 @@ def create():
 
 @app.route('/delete/<int:index>')
 def delete(index):
-  todos.pop(index)
+  contacts.pop(index)
   return redirect('/')
 
 
 @app.route('/update/<int:index>', methods=['POST'])
 def update(index):
   name = request.form.get('name')
-  todos[index]['name'] = name
+  contacts[index]['name'] = name
   email = request.form.get('email')
-  todos[index]['email'] = email
+  contacts[index]['email'] = email
   phone = request.form.get('phone')
-  todos[index]['phone'] = phone
+  contacts[index]['phone'] = phone
   return redirect('/')
 
 # IMPORTANTE V
