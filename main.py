@@ -3,9 +3,9 @@ app = Flask('app')
 
 todos = [
   { 
-    'title': 'Chrystian Alvarenga',
-    'category':'chrystianalvarenga@hotmail.com',
-    'telephone':'(16)99460-3667'    
+    'name': 'Chrystian Alvarenga',
+    'email':'chrystianalvarenga@hotmail.com',
+    'phone':'(16)99460-3667'    
   }
 ]
 
@@ -15,13 +15,13 @@ def index():
 
 @app.route('/create', methods=['POST'])
 def create():
-  title = request.form.get('title')
-  cat = request.form.get('category')
-  tel = request.form.get('telephone')
+  name = request.form.get('name')
+  email = request.form.get('email')
+  phone = request.form.get('phone')
   todos.append({
-    'title': title,   
-    'category': cat,
-    'telephone': tel,
+    'name': name,   
+    'email': email,
+    'phone': phone
   })
   return redirect('/')
 
@@ -33,12 +33,12 @@ def delete(index):
 
 @app.route('/update/<int:index>', methods=['POST'])
 def update(index):
-  title = request.form.get('title')
-  todos[index]['title'] = title
-  category = request.form.get('category')
-  todos[index]['category'] = category
-  telephone = request.form.get('telephone')
-  todos[index]['telephone'] = telephone
+  name = request.form.get('name')
+  todos[index]['name'] = name
+  email = request.form.get('email')
+  todos[index]['email'] = email
+  phone = request.form.get('phone')
+  todos[index]['phone'] = phone
   return redirect('/')
 
 # IMPORTANTE V
