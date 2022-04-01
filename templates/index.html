@@ -1,36 +1,46 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="stylesheet/style.css" rel="stylesheet">
-  <title>Agenda de Contatos</title>
+  <title>Agenda</title>
+  <link rel="stylesheet" href="static/style.css">
+  <link rel="stylesheet" href="static/neumorphism-ui.css">
 </head>
-<body>
-<!--  Formulário de criação de Agenda -->
-  <h1> Agenda de Contatos </h1>
-  <form action="/create" method="POST">
-    <input type="text" name="name" placeholder="Nome">
-    <input type="text" name="email" placeholder="E-mail">
-    <input type="tel"name="phone" placeholder="Telefone">    
-    <button type="submit">
-      Adicionar
-    </button>
-  </form>  
-
-  <!-- Exibição da lista de Contact  -->
-  <table>
-      <ul>
-        {% for item in contacts %}
-        <td>
-          <li><input type="text" name="{{ item.name }}" value="{{ item.name }}"</input>
-          <input type="text" name="{{ item.email }}" value="{{ item.email }}"</input>
-          <input type="text" name="{{ item.phone }}" value="{{ item.phone }}"</input>
-          <button type="edit">Editar</button></li>
-        </td>
-            {% endfor %}
-      </ul>
-  </table>
+<body class="light-mode">
+  <div class="sul-box-raised-2 container">
+    <h1>Agenda</h1>
+    <!-- Formulário de criação de TODO -->
+    <form action="/create" method="POST">
+      <input class="sul-text-field" name="title" placeholder="Nome">
+      <input class="sul-text-field" name="category" placeholder="E-mail">
+      <input class="sul-text-field" name="tel" placeholder="Telefone">
+      <button class="sul-btn" type="submit">
+        Adicionar
+      </button>
+    </form>
+  
+    <!-- Exibição da lista de TODOs -->
+    <ul>
+      {% for item in todos %}
+        <li>
+          {% if item.complete == True %}
+            <s>{{ item.title }}</s>
+          {% else %}
+            <form action="/update/{{loop.index0}}" method="POST">
+              <input class="sul-text-field" name="title" value="{{item.title}}">
+              <input class="sul-text-field" name="category" value="{{item.category}}">
+              <input class="sul-text-field" name="telephone" value="{{item.telephone}}">
+              <button class="sul-btn" type="submit">
+                Editar
+              </button>
+            </form>
+          {% endif %}           
+          <a href="/delete/{{loop.index0}}">❌</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 </body>
 </html>
