@@ -28,7 +28,7 @@
           {% if item.complete == True %}
             <s>{{ item.name }}</s>
           {% else %}
-            <form action="/update/{{loop.index0}}" method="POST">
+            <form action="/update/{{ item.id }}" method="POST">
               <input class="sul-text-field" name="name" value="{{item.name}}">
               <input class="sul-text-field" name="email" value="{{item.email}}">
               <input class="sul-text-field" name="phone" value="{{item.phone}}">
