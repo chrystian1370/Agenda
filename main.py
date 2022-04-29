@@ -49,7 +49,7 @@ def flashing():
 @app.route('/hello/')
 def hello():
   contacts = Contacts.query.all()
-  flash(f' Bem-vindo, , {Users.name}!', 'info')
+  flash(f' Bem-vindo,{Users.name}!', 'info')
   return render_template(
     'hello.html',
     contacts=contacts
