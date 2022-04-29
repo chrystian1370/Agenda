@@ -46,7 +46,7 @@ def flashing():
     contacts=contacts    
   )
 
-@app.route('/hello/')
+@app.route('/hello')
 def hello():
   contacts = Contacts.query.all()
   flash(f' Bem-vindo,{Users.name}!', 'info')
