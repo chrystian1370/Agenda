@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -32,6 +32,14 @@ def index():
     'index.html',
     contacts=contacts
   )
+  
+@app.route('/flashing')
+def flashing():
+  contacts = Contacts.query.all()
+  return render_template(
+    'flashing.html',
+    contacts=contacts
+  )
 
 @app.route('/create', methods=['POST'])
 def create():
@@ -45,6 +53,7 @@ def create():
   )
   db.session.add(new_cont)
   db.session.commit()
+  flash('Contato criado com sucesso', 'success') # envia msg para o usuario
   return redirect('/')
 
 @app.route('/delete/<int:id>')
@@ -52,6 +61,7 @@ def delete(id):
   cont = Contacts.query.filter_by(id=id).first()
   db.session.delete(cont)
   db.session.commit()
+  flash('Contato deletado com sucesso', 'success') # envia msg para o usuario
   return redirect('/')
 
 @app.route('/update/<int:id>', methods=['POST'])
@@ -63,11 +73,13 @@ def update(id):
   cont.name = name
   cont.email = email
   cont.phone = phone
-  db.session.commit()  
+  db.session.commit()
+  flash('Contatu atualizado com sucesso!','success') # envia msg para o usuario
   return redirect('/')
 
 @app.route('/login')
 def login():
+  flash('Sucesso', 'success') # envia msg para o usuario
   return render_template('login.html')
 
 @app.route('/register')
@@ -83,6 +95,7 @@ def signup():
   # Verificar se já existe o email no bd
   user = users.query.filter_by(email=email_input).first()
   if user:
+    flash('Este e-mail já existe no sistema', 'error') # envia msg para o usuario
     return redirect('/register')
 
   new_user = users(
@@ -92,6 +105,7 @@ def signup():
   )
   db.session.add(new_user)
   db.session.commit()
+  flash('Usuário criado com sucesso', 'success') # envia msg para o usuario
   return redirect('/login')
 
 @app.route('/signin', methods=['POST'])
@@ -102,10 +116,12 @@ def signin():
   # Verificar se existe um usuário com o email
   user = users.query.filter_by(email=email_input).first()
   if not user:
+    flash('E-mail ou senha inválidos', 'error') # envia msg para o usuario
     return redirect('/login')
 
   # Verificar se senha está correta
   if not check_password_hash(user.password, password_input):
+    flash('E-mail ou senha inválidos', 'error') # envia msg para o usuario
     return redirect('/login')
 
   # Guardar usuário na sessão
