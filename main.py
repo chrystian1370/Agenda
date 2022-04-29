@@ -7,13 +7,14 @@ app.config['SECRET_KEY'] = 'qEChL7R3SpF72cEA'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
 
-class users(db.Model):
+class Users(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(100))
   email = db.Column(db.String(100))
   password = db.Column(db.String(50))
   created_at = db.Column(db.String(50))
   updated_at = db.Column(db.String(50))
+  user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 class Contacts(db.Model):
   id = db.Column(db.Integer, primary_key=True)
@@ -27,17 +28,30 @@ class Contacts(db.Model):
 
 @app.route('/')
 def index():
-  contacts = Contacts.query.all()
+  if 'user_id' not in session:
+    flash('Usuário não logado', 'error')
+    return redirect('/login')  
+  users = Users.query.filter_by(user_id=session['user_id']).all()
   return render_template(
     'index.html',
-    contacts=contacts
+    users=users
   )
   
 @app.route('/flashing')
 def flashing():
   contacts = Contacts.query.all()
+  flash('Sucesso', 'success') # envia msg para o usuario
   return render_template(
-    'flashing.html',
+    'flashing.html',    
+    contacts=contacts    
+  )
+
+@app.route('/hello/')
+def hello():
+  contacts = Contacts.query.all()
+  flash(f'Olá, {Users.name}', 'info')
+  return render_template(
+    'hello.html',
     contacts=contacts
   )
 
@@ -93,12 +107,12 @@ def signup():
   password_input = request.form.get('password')
 
   # Verificar se já existe o email no bd
-  user = users.query.filter_by(email=email_input).first()
+  user = Users.query.filter_by(email=email_input).first()
   if user:
     flash('Este e-mail já existe no sistema', 'error') # envia msg para o usuario
     return redirect('/register')
 
-  new_user = users(
+  new_user = Users(
     name=name_input,
     email=email_input,
     password=generate_password_hash(password_input)
@@ -114,7 +128,7 @@ def signin():
   password_input = request.form.get('password')
 
   # Verificar se existe um usuário com o email
-  user = users.query.filter_by(email=email_input).first()
+  user = Users.query.filter_by(email=email_input).first()
   if not user:
     flash('E-mail ou senha inválidos', 'error') # envia msg para o usuario
     return redirect('/login')
