@@ -4,43 +4,23 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agenda de Contatos</title>
-  <link rel="stylesheet" href="static/style.css">
-  <link rel="stylesheet" href="static/neumorphism-ui.css">
+  <title>AGENDA</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/neumorphism-ui.css">
 </head>
 <body class="dark-mode">
-  
-  <a href="/logout" class="closet">❌</a>
-  <a href="/" class="return">↩</a>  
-
   <div class="sul-box-raised-2 container">
-    <h1>Hello Word</h1>
+    <h1>Hello World</h1>
   </div>
   
   {% with messages = get_flashed_messages(with_categories=True) %}
     {% if messages %}
       <div class="messages">
         {% for type, text in messages %}
-          <div class="{{ type }}">
-            <span>{{ text }}</span>
-            <button class="close" onclick="closeMsg(this);">
-            ❌
-            </button>
-          </div>
+          <span class="{{ type }}"> {{ text }} </span>
         {% endfor %}
       </div>
     {% endif %}
   {% endwith %}
-
-  <script>
-    function closeMsg(el) {
-      el.parentNode.remove();
-    }
-    
-    setTimeout(function() {
-      const msgElement = document.querySelector('.messages');
-      msgElement.style.display = 'none';
-    }, 5000);
-  </script>
 </body>
 </html>
