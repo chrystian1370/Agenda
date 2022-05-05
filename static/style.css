@@ -68,3 +68,19 @@ body {
   padding: 8px 16px;
   margin-botton: 10px;
 }
+
+.closet{
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  z-index: 1;
+}
+
+.return{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  max-width: 50px; 
+  max-height: 50px;
+}

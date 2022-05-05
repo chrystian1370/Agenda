@@ -10,6 +10,10 @@
   <link rel="stylesheet" href="static/neumorphism-ui.css">
 </head>
 <body class="dark-mode">
+  
+  <a href="/logout" class="closet">❌</a>
+  <a href="/" class="return">↩</a>
+  
   <div class="sul-box-raised-2 container">
     <h1>Cadastro</h1>
     <form class="form-login" action="/signup" method="POST">
@@ -20,5 +24,30 @@
     </form>
     <a href="/login">Login</a>
   </div>
+  {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+      <div class="messages">
+        {% for type, text in messages %}
+          <div class="{{ type }}">
+            <span>{{ text }}</span>
+            <button class="close" onclick="closeMsg(this);">
+            ❌
+            </button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
 
+  <script>
+    function closeMsg(el) {
+      el.parentNode.remove();
+    }
+    
+    setTimeout(function() {
+      const msgElement = document.querySelector('.messages');
+      msgElement.style.display = 'none';
+    }, 5000);
+  </script>
 </body>
+</html>

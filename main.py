@@ -31,29 +31,10 @@ def index():
   if 'user_id' not in session:
     flash('Usuário não logado', 'error')
     return redirect('/login')  
-  users = Users.query.filter_by(user_id=session['user_id']).all()
-  return render_template(
-    'index.html',
-    users=users
-  )
+  contacts = Contacts.query.filter_by(user_id=session['user_id']).all()
   
-@app.route('/flashing')
-def flashing():
-  contacts = Contacts.query.all()
-  flash('Sucesso', 'success') # envia msg para o usuario
-  return render_template(
-    'flashing.html',    
-    contacts=contacts    
-  )
-
-@app.route('/hello')
-def hello():
-  contacts = Contacts.query.all()
-  flash(f' Bem-vindo,{Users.name}!', 'info')
-  return render_template(
-    'hello.html',
-    contacts=contacts
-  )
+  return render_template('index.html', contacts=contacts)
+  
 
 @app.route('/create', methods=['POST'])
 def create():
@@ -64,6 +45,7 @@ def create():
     name=name, 
     email=email, 
     phone=phone,
+    user_id=session['user_id']
   )
   db.session.add(new_cont)
   db.session.commit()
@@ -93,7 +75,6 @@ def update(id):
 
 @app.route('/login')
 def login():
-  flash('Sucesso', 'success') # envia msg para o usuario
   return render_template('login.html')
 
 @app.route('/register')
@@ -140,6 +121,7 @@ def signin():
 
   # Guardar usuário na sessão
   session['user_id'] = user.id
+  flash(f'Olá, {user.name}', 'info')
   return redirect('/')
 
 @app.route('/logout')
@@ -147,6 +129,20 @@ def logout():
   session.pop('user_id', None)
   return redirect('/login')
 
+@app.route('/flashing')
+def flashing():
+  contacts = Contacts.query.all()
+  flash('Sucesso', 'success') # envia msg para o usuario
+  return render_template(
+    'flashing.html',    
+    contacts=contacts    
+  )
+
+@app.route('/hello/<name>')
+def hello(name):
+    flash(f'Bem-vindo, {name}!', 'info')
+    return render_template('hello.html')
+  
 # IMPORTANTE V
 if __name__ == '__main__':
   db.create_all()
